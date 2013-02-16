@@ -437,10 +437,15 @@ namespace DrRobot.JaguarControl
             diffEncoderPulseL = currentEncoderPulseL - lastEncoderPulseL;
 
             // Check for Overflow and take the "inverted" difference if overflow occurred.
-            if (diffEncoderPulseR > maxTickSpeed)
-                diffEncoderPulseR = encoderMax - Math.Abs(currentEncoderPulseR - lastEncoderPulseR);
-            if (diffEncoderPulseL > maxTickSpeed)
-                diffEncoderPulseL = encoderMax - Math.Abs(currentEncoderPulseL - lastEncoderPulseL);
+            if (diffEncoderPulseR < (-1*maxTickSpeed) )
+                diffEncoderPulseR = currentEncoderPulseR + (encoderMax - lastEncoderPulseR);
+            if (diffEncoderPuleR > maxTickSpeed)
+                diffEncoderPulseR = -1*(lastEncoderPulseR + (encoderMax - currentEncoderPulseR));
+                
+            if (diffEncoderPulseL < (-1*maxTickSpeed) )
+                diffEncoderPulseL = currentEncoderPulseL + (encoderMax - lastEncoderPulseL);
+            if (diffEncoderPuleL > maxTickSpeed)
+                diffEncoderPulseL = -1*(lastEncoderPulseL + (encoderMax - currentEncoderPulseL));
 
             // Calculate Linear wheel Distance travelled (in one DeltaT): [Lecture 3, Slide 16]
             wheelDistanceL = diffEncoderPulseL / pulsesPerRotation * 2 * Math.PI * wheelRadius;
